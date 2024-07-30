@@ -18,7 +18,11 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+    private String department;
 
-    @OneToMany(mappedBy = "user")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="user_tasks",
+            joinColumns=  @JoinColumn(name="user_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name="task_id", referencedColumnName="id") )
     private List<Task> tasks;
 }

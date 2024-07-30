@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -17,9 +18,12 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
+    public Date deadline;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="user_tasks",
+            joinColumns=  @JoinColumn(name="task_id", referencedColumnName="id"),
+            inverseJoinColumns= @JoinColumn(name=" user_id", referencedColumnName="id") )
+    private List<User> users;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
 }
