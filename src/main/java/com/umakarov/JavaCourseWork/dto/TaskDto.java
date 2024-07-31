@@ -1,8 +1,14 @@
 package com.umakarov.JavaCourseWork.dto;
 
-public class TaskDto {
+import lombok.Data;
 
+import java.util.Date;
+import java.util.List;
+
+@Data
+public class TaskDto {
     private Long id;
     private String description;
-//    private Long userId;
+    public Date deadline;
+
 }

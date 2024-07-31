@@ -23,7 +23,7 @@ public class Task {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="user_tasks",
             joinColumns=  @JoinColumn(name="task_id", referencedColumnName="id"),
-            inverseJoinColumns= @JoinColumn(name=" user_id", referencedColumnName="id") )
+            inverseJoinColumns= @JoinColumn(name="user_id", referencedColumnName="id") )
     private List<User> users;
 
 }

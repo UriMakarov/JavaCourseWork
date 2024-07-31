@@ -26,4 +26,11 @@ public class TaskService {
                 .map(taskMapper::toDto)
                 .toList());
     }
+    public ResponseEntity<TaskDto> getTaskById(Long id) {
+        return taskRepository.findById(id)
+                .map(taskMapper::toDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 }
