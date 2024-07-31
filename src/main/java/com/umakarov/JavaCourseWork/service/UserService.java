@@ -29,9 +29,9 @@ public class UserService {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
     }
-    public UserService() {
-        this(null, null, null, null);
-    }
+//    public UserService() {
+//        this(null, null, null, null);
+//    }
 
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<User> users = userRepository.findAll();
@@ -46,13 +46,13 @@ public class UserService {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-//    public ResponseEntity<List<TaskDto>> getTasksByUserId(Long id) {
-//        List<Task> tasks = taskRepository.getTasksByUserId(id);
-//        List<TaskDto> taskDto = tasks.stream()
-//                .map(taskMapper::toDto).toList();
-//
-//        return ResponseEntity.ok(taskDto);
-//    }
+    public ResponseEntity<List<TaskDto>> getTasksByUserId(Long id) {
+        List<Task> tasks = taskRepository.getTasksByUserId(id);
+        List<TaskDto> taskDto = tasks.stream()
+                .map(taskMapper::toDto).toList();
+
+        return ResponseEntity.ok(taskDto);
+    }
 
 }
 
