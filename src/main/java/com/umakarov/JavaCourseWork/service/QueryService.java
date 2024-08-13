@@ -5,33 +5,42 @@ import com.umakarov.JavaCourseWork.dto.UserDto;
 import com.umakarov.JavaCourseWork.entity.Task;
 import com.umakarov.JavaCourseWork.entity.User;
 import com.umakarov.JavaCourseWork.mapper.TaskMapper;
+import com.umakarov.JavaCourseWork.mapper.UserMapper;
 import com.umakarov.JavaCourseWork.repository.TaskRepository;
 import com.umakarov.JavaCourseWork.repository.UserRepository;
-import com.umakarov.JavaCourseWork.mapper.UserMapper;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class UserService {
 
+@Service
+public class QueryService {
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
     private final UserMapper userMapper;
     private final TaskMapper taskMapper;
 
-
-    public UserService(UserMapper userMapper, UserRepository userRepository, TaskRepository taskRepository, TaskMapper taskMapper) {
+    public QueryService(UserRepository userRepository, TaskRepository taskRepository, UserMapper userMapper, TaskMapper taskMapper) {
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
         this.taskRepository = taskRepository;
+        this.userMapper = userMapper;
         this.taskMapper = taskMapper;
     }
-//    public UserService() {
-//        this(null, null, null, null);
-//    }
+
+
+    public ResponseEntity<List<TaskDto>> getAllTasks() {
+        List<Task> tasks = taskRepository.findAll();
+        return ResponseEntity.ok(tasks.stream()
+                .map(taskMapper::toDto)
+                .toList());
+    }
+    public ResponseEntity<TaskDto> getTaskById(Long id) {
+        return taskRepository.findById(id)
+                .map(taskMapper::toDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<User> users = userRepository.findAll();
@@ -54,6 +63,10 @@ public class UserService {
         return ResponseEntity.ok(taskDto);
     }
 
+    public ResponseEntity<List<UserDto>> getUsersByTaskId(Long id) {
+        List<User> users = userRepository.getUsersByTaskId(id);
+        List<UserDto> userDto = users.stream()
+                .map(userMapper::toDto).toList();
+        return ResponseEntity.ok(userDto);
+    }
 }
-
-
