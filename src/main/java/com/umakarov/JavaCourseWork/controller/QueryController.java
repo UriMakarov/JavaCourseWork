@@ -26,14 +26,16 @@ public class QueryController {
     public ResponseEntity<List<UserDto>> getAllUsers() {
         return ResponseEntity.ok(queryService.getAllUsers().getBody());
     }
-    @GetMapping("/users/{id}")
-    public ResponseEntity<List<UserDto>> getUsersByTaskId(@PathVariable Long id) {
-        return ResponseEntity.ok(queryService.getUsersByTaskId(id).getBody());
+    @GetMapping("/users/{taskId}")
+    public ResponseEntity<List<UserDto>> getUsersByTaskId(@PathVariable Long taskId) {
+        return ResponseEntity.ok(queryService.getUsersByTaskId(taskId).getBody());
     }
 
     @GetMapping("/user/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
-        return ResponseEntity.ok(queryService.getUserById(id).getBody());
+        return queryService.getUserById(id).
+                map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("tasks")
@@ -42,11 +44,13 @@ public class QueryController {
     }
     @GetMapping("/task/{id}")
     public ResponseEntity<TaskDto> getTaskById(@PathVariable Long id) {
-        return ResponseEntity.ok(queryService.getTaskById(id).getBody());
+        return queryService.getTaskById(id).
+                map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/tasks/{id}")
-    public ResponseEntity<List<TaskDto>> getTasksByUserId(@PathVariable Long id) {
-        return ResponseEntity.ok(queryService.getTasksByUserId(id).getBody());
+    @GetMapping("/tasks/{userId}")
+    public ResponseEntity<List<TaskDto>> getTasksByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(queryService.getTasksByUserId(userId).getBody());
     }
 }
