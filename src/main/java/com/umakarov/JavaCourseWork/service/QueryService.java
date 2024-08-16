@@ -60,4 +60,7 @@ public class QueryService {
                 .map(userMapper::toDto).toList();
         return ResponseEntity.ok(userDto);
     }
+    public Long getUserIdWithMinTasksCount() {
+        return userRepository.getUserIdWithMinTasksCount();
+    }
 }

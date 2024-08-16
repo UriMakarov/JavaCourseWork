@@ -26,6 +26,13 @@ public class QueryController {
     public ResponseEntity<List<UserDto>> getAllUsers() {
         return ResponseEntity.ok(queryService.getAllUsers().getBody());
     }
+    @GetMapping("/userwithmincount")
+    public ResponseEntity<Long> getUserIdWithMinTasksCount() {
+        return ResponseEntity.ok(queryService.getUserIdWithMinTasksCount());
+    }
+
+
+
     @GetMapping("/users/{taskId}")
     public ResponseEntity<List<UserDto>> getUsersByTaskId(@PathVariable Long taskId) {
         return ResponseEntity.ok(queryService.getUsersByTaskId(taskId).getBody());

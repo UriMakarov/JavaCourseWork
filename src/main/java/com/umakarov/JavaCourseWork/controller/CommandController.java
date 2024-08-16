@@ -32,6 +32,11 @@ public class CommandController {
     public ResponseEntity<TaskDto> createTask(TaskDto taskDto) {
         return ResponseEntity.ok(commandService.createTask(taskDto));
     }
+    @PostMapping("/usertasks/{userId}/{taskId}")
+    public ResponseEntity<Object> createUserTask(@PathVariable Long userId, @PathVariable Long taskId) {
+        Object result = commandService.assignUserToTask(userId, taskId);
+        return ResponseEntity.ok().body(result);
+    }
 
     @PutMapping("/tasks/{id}")
     public ResponseEntity<TaskDto> updateTask(@PathVariable Long id, @RequestBody TaskDto taskDto) {
@@ -41,6 +46,12 @@ public class CommandController {
     @DeleteMapping("/tasks/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         commandService.deleteTask(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/usertasks/{userId}/{taskId}")
+    public ResponseEntity<Void> removeTaskFromUser(@PathVariable Long userId, @PathVariable Long taskId) {
+        commandService.removeTaskFromUser(userId, taskId);
         return ResponseEntity.ok().build();
     }
 

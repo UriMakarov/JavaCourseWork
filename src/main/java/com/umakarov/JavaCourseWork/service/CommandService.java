@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
 @Service
 @RequiredArgsConstructor
 public class CommandService {
@@ -29,7 +30,7 @@ public class CommandService {
     }
 
     public UserDto updateUser(Long id, UserDto userDto) {
-        Optional <User> optionalUser = userRepository.findById(id);
+        Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             user.setFirstName(userDto.getFirstName());
@@ -44,7 +45,7 @@ public class CommandService {
     }
 
     public void deleteUser(Long id) {
-        Optional <User> optionalUser = userRepository.findById(id);
+        Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             userRepository.delete(user);
@@ -60,7 +61,7 @@ public class CommandService {
     }
 
     public TaskDto updateTask(Long id, TaskDto taskDto) {
-        Optional <Task> optionalTask = taskRepository.findById(id);
+        Optional<Task> optionalTask = taskRepository.findById(id);
         if (optionalTask.isPresent()) {
             Task task = optionalTask.get();
             task.setDescription(taskDto.getDescription());
@@ -73,7 +74,7 @@ public class CommandService {
     }
 
     public void deleteTask(Long id) {
-        Optional <Task> optionalTask = taskRepository.findById(id);
+        Optional<Task> optionalTask = taskRepository.findById(id);
         if (optionalTask.isPresent()) {
             Task task = optionalTask.get();
             taskRepository.delete(task);
@@ -82,4 +83,22 @@ public class CommandService {
         }
     }
 
+    public boolean checkUserTask(Long userId, Long taskId) {
+        return userRepository.checkUserTask(userId, taskId);
+    }
+
+    public String assignUserToTask(Long userId, Long taskId) {
+        if (checkUserTask(userId, taskId)) {
+            userRepository.assignTaskToUser(userId, taskId);
+            return "User with id: " + userId + " assigned to task with id: " + taskId;
+        } else {
+            return "User with id: " + userId + " can't be assigned to task with id: " + taskId;
+        }
+    }
+
+    public void removeTaskFromUser(Long userId, Long taskId) {
+        userRepository.removeTaskFromUser(userId, taskId);
+    }
+
 }
+
