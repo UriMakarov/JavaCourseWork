@@ -21,6 +21,7 @@ public interface UserRepository  extends JpaRepository <User, Long> {
         AND EXISTS (SELECT 1 FROM tasks WHERE id = :taskId)
         AND NOT EXISTS (SELECT 1 FROM user_tasks WHERE user_id = :userId AND task_id = :taskId)""")
     boolean checkUserTask(Long userId, Long taskId);
+    //id юзера существует И id задачи существует И запись связи в user_tasks не существует - можно добавлять
 
     @Query(nativeQuery = true,
         value = "DELETE from user_tasks  WHERE user_id = :userId AND task_id = :taskId returning user_id")
@@ -35,7 +36,9 @@ public interface UserRepository  extends JpaRepository <User, Long> {
     ORDER BY COUNT(tu.task_id)
     LIMIT 1""")
     Long getUserIdWithMinTasksCount();
+    //первый попавшийся юзер с минимальным количеством задач
 }
+
 
 //users with task_count
 //    SELECT u.id, u.first_name, u.last_name, u.department, COUNT(ut.task_id) AS task_count

@@ -11,4 +11,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     @Query(value = "SELECT t.id, t.description, t.deadline FROM tasks t, user_tasks ut WHERE t.id = ut.task_id AND ut.user_id = :userId", nativeQuery = true)
     List <Task>  getTasksByUserId(Long userId);
 
+    @Query(value = "SELECT t.* FROM tasks t WHERE t.description ILIKE CONCAT('%', :fragment, '%')", nativeQuery = true)
+    List<Task> findTasksByNameFragment(String fragment);
+
 }

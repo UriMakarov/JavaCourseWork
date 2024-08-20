@@ -49,6 +49,12 @@ public class QueryController {
     public ResponseEntity<List<TaskDto>> getAllTasks() {
         return ResponseEntity.ok(queryService.getAllTasks().getBody());
     }
+
+    @GetMapping("/foundtasks/{fragment}")
+    public ResponseEntity<List<TaskDto>> getFoundTasks(@PathVariable String fragment) {
+        return ResponseEntity.ok(queryService.getTaskByNameFragment(fragment).getBody());
+    }
+
     @GetMapping("/task/{id}")
     public ResponseEntity<TaskDto> getTaskById(@PathVariable Long id) {
         return queryService.getTaskById(id).

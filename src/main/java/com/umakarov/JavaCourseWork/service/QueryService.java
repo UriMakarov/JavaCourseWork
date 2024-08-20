@@ -30,6 +30,12 @@ public class QueryService {
                 .map(taskMapper::toDto)
                 .toList());
     }
+    public ResponseEntity<List<TaskDto>> getTaskByNameFragment(String fragment) {
+        List<Task> tasks = taskRepository.findTasksByNameFragment(fragment);
+        return ResponseEntity.ok(tasks.stream()
+                .map(taskMapper::toDto)
+                .toList());
+    }
     public Optional<TaskDto> getTaskById(Long id) {
         return taskRepository.findById(id)
                 .map(taskMapper::toDto);
