@@ -20,7 +20,7 @@ public class Task {
     private String description;
     public Date deadline;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name="user_tasks",
             joinColumns=  @JoinColumn(name="task_id", referencedColumnName="id"),
             inverseJoinColumns= @JoinColumn(name="user_id", referencedColumnName="id") )

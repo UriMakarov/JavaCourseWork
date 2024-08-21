@@ -25,4 +25,5 @@ public class User {
             joinColumns=  @JoinColumn(name="user_id", referencedColumnName="id"),
             inverseJoinColumns= @JoinColumn(name="task_id", referencedColumnName="id") )
     private List<Task> tasks;
+
 }
